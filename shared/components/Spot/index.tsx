@@ -5,23 +5,31 @@ import styles from "./Spot.module.css";
 interface Props {
   number: number;
   available: boolean;
-  isUserSelected: boolean;
+  isSpotSelected: boolean;
+  setSelectedSpot: (spotNumber: number) => void;
 }
 
 function isAvailableClass(available: boolean): string {
   return available ? styles.available : styles.unavailable;
 }
 
-function isUserSelectedClass(isUserSelected: boolean): string | null {
-  return isUserSelected ? styles.selected : null;
+function isSpotSelectedClass(isSpotSelected: boolean): string | null {
+  return isSpotSelected ? styles.selected : null;
 }
 
-function Component({ number, available, isUserSelected }: Props) {
+function Component({
+  number,
+  available,
+  isSpotSelected,
+  setSelectedSpot,
+}: Props) {
+  console.log(`spot ${number}`, isSpotSelected);
   return (
     <Card
+      onClick={() => setSelectedSpot(number)}
       className={`
         ${isAvailableClass(available)}
-        ${isUserSelectedClass(isUserSelected)}
+        ${isSpotSelectedClass(isSpotSelected)}
       `}
     >
       <h1>{number}</h1>

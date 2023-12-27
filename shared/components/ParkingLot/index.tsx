@@ -1,3 +1,4 @@
+import { useReservationContext } from "@/app/reservation/providers/reservation.context";
 import { ParkingLot as ParkingLotEntity } from "@/core/domain/model/ParkingLot";
 import { Spot as SpotEntity } from "@/core/domain/model/Spot";
 import { memo } from "react";
@@ -9,16 +10,34 @@ interface Props {
   spots: SpotEntity[];
 }
 
+type isSpotSelected = {
+  selectedSpot: number | null;
+  spotNumber: number;
+};
+
 function Component({ parkingLot, spots }: Props) {
+  const { selectedSpot, handleSelectSpot } = useReservationContext();
+
+  const isSpotSelected = ({
+    selectedSpot,
+    spotNumber,
+  }: isSpotSelected): boolean => {
+    return selectedSpot === spotNumber;
+  };
+
   return (
     <div className={styles.wrapper}>
-      {spots.map((spot) => {
+      {spots.map(({ ID, number, reserved }) => {
         return (
           <Spot
-            key={spot.ID}
-            number={spot.number}
-            available={!spot.reserved}
-            isUserSelected={false}
+            key={ID}
+            number={number}
+            available={!reserved}
+            isSpotSelected={isSpotSelected({
+              selectedSpot,
+              spotNumber: number,
+            })}
+            setSelectedSpot={() => handleSelectSpot(number, !reserved)}
           />
         );
       })}

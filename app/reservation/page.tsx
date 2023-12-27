@@ -1,9 +1,12 @@
+"use client";
 import { ParkingLot as ParkingLotEntity } from "@/core/domain/model/ParkingLot";
 import { Spot } from "@/core/domain/model/Spot";
 import { Header } from "@/shared/components/Header";
 import { ParkingLot } from "@/shared/components/ParkingLot";
 import { inParkingFont } from "@/theme/appFonts";
 import styles from "./Reservation.module.css";
+import { useParkingLot } from "./hooks/useParkingLot";
+import { ReservationProvider } from "./providers/reservation.provider";
 
 const mockSpots: Spot[] = [
   {
@@ -66,17 +69,26 @@ const mockParkingLot: ParkingLotEntity = {
 };
 
 export default function ReservationPage() {
+  const { selectedSpot, handleSelectSpot } = useParkingLot();
+
+  const providerValues = {
+    selectedSpot,
+    handleSelectSpot,
+  };
+
   return (
-    <main className={`${styles.main} ${inParkingFont.className}`}>
-      <Header
-        title="Realizar reservación"
-        subtitle="Selecciona el slot que quieras"
-      >
-        <em className={`${styles.underlinedText}`}>
-          Nota: Los disponibles son los pintados en <span>verde</span>
-        </em>
-      </Header>
-      <ParkingLot parkingLot={mockParkingLot} spots={mockSpots} />
-    </main>
+    <ReservationProvider.Provider value={providerValues}>
+      <main className={`${styles.main} ${inParkingFont.className}`}>
+        <Header
+          title="Realizar reservación"
+          subtitle="Selecciona el slot que quieras"
+        >
+          <em className={`${styles.underlinedText}`}>
+            Nota: Puedes seleccionar SOLO <span>1 spot</span>
+          </em>
+        </Header>
+        <ParkingLot parkingLot={mockParkingLot} spots={mockSpots} />
+      </main>
+    </ReservationProvider.Provider>
   );
 }
