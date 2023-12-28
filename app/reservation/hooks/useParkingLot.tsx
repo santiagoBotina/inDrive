@@ -6,7 +6,7 @@ export const useParkingLot = () => {
   const handleSelectSpot = (spotNumber: number, isAvailable: boolean) => {
     if (!isAvailable) return null;
 
-    if (selectedSpot) {
+    if (selectedSpot && selectedSpot === spotNumber) {
       return setSelectedSpot(null);
     }
     setSelectedSpot(spotNumber);

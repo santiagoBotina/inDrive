@@ -80,8 +80,8 @@ export default function ReservationPage() {
     <ReservationProvider.Provider value={providerValues}>
       <main className={`${styles.main} ${inParkingFont.className}`}>
         <Header
-          title="Realizar reservación"
-          subtitle="Selecciona el slot que quieras"
+          title="Realizar reservación en Parqueadero #1"
+          subtitle="Selecciona el spot que quieras"
         >
           <em className={`${styles.underlinedText}`}>
             Nota: Puedes seleccionar SOLO <span>1 spot</span>
