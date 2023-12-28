@@ -1,6 +1,7 @@
 "use client";
 import { ParkingLot as ParkingLotEntity } from "@/core/domain/model/ParkingLot";
 import { Spot } from "@/core/domain/model/Spot";
+import { Button } from "@/shared/components/Button";
 import { Header } from "@/shared/components/Header";
 import { ParkingLot } from "@/shared/components/ParkingLot";
 import { inParkingFont } from "@/theme/appFonts";
@@ -79,6 +80,7 @@ export default function ReservationPage() {
   return (
     <ReservationProvider.Provider value={providerValues}>
       <main className={`${styles.main} ${inParkingFont.className}`}>
+        {/* VIEW #1 - SLOT SELECT */}
         <Header
           title="Realizar reservación en Parqueadero #1"
           subtitle="Selecciona el spot que quieras"
@@ -88,6 +90,8 @@ export default function ReservationPage() {
           </em>
         </Header>
         <ParkingLot parkingLot={mockParkingLot} spots={mockSpots} />
+        <Button onClick={() => {}}>Seleccionar fecha de reserva</Button>
+        {/* ---------------------- */}
       </main>
     </ReservationProvider.Provider>
   );
