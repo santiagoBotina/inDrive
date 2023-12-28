@@ -5,6 +5,8 @@ import { Button } from "@/shared/components/Button";
 import { Header } from "@/shared/components/Header";
 import { ParkingLot } from "@/shared/components/ParkingLot";
 import { inParkingFont } from "@/theme/appFonts";
+import Image from "next/image";
+import { useRef } from "react";
 import styles from "./Reservation.module.css";
 import { useParkingLot } from "./hooks/useParkingLot";
 import { ReservationProvider } from "./providers/reservation.provider";
@@ -70,7 +72,9 @@ const mockParkingLot: ParkingLotEntity = {
 };
 
 export default function ReservationPage() {
-  const { selectedSpot, handleSelectSpot } = useParkingLot();
+  const selectSpotRef = useRef(null);
+  const selectTimeRef = useRef(null);
+  const { selectedSpot, handleSelectSpot, handleScroll } = useParkingLot();
 
   const providerValues = {
     selectedSpot,
@@ -81,16 +85,56 @@ export default function ReservationPage() {
     <ReservationProvider.Provider value={providerValues}>
       <main className={`${styles.main} ${inParkingFont.className}`}>
         {/* VIEW #1 - SLOT SELECT */}
-        <Header
-          title="Realizar reservación en Parqueadero #1"
-          subtitle="Selecciona el spot que quieras"
-        >
-          <em className={`${styles.underlinedText}`}>
-            Nota: Puedes seleccionar SOLO <span>1 spot</span>
-          </em>
-        </Header>
-        <ParkingLot parkingLot={mockParkingLot} spots={mockSpots} />
-        <Button onClick={() => {}}>Seleccionar fecha de reserva</Button>
+        <section className={styles.spotSelection} ref={selectSpotRef}>
+          <Header
+            title="Realizar reservación en Parqueadero #1"
+            subtitle="Selecciona el spot que quieras"
+          >
+            <em className={`${styles.underlinedText}`}>
+              Nota: Puedes seleccionar SOLO <span>1 spot</span>
+            </em>
+          </Header>
+          <ParkingLot parkingLot={mockParkingLot} spots={mockSpots} />
+          <Button
+            className={styles.selectTimeButton}
+            disabled={!selectedSpot}
+            onClick={() => handleScroll(selectTimeRef)}
+          >
+            Seleccionar fecha de reserva
+          </Button>
+        </section>
+        <section ref={selectTimeRef} className={`${styles.selectTime}`}>
+          {selectedSpot !== null ? (
+            <>
+              <Header
+                title={`Selecciona tu fecha de reserva para el spot #${selectedSpot}`}
+              >
+                <p>
+                  Selecciona el tiempo que mejor se ajuste a tus necesidades
+                </p>
+              </Header>
+              <Image src={"/car.svg"} alt="pink-car" width={200} height={200} />
+              <p>Seleccione la fokin fecha</p>
+              <input type="datetime-local" />
+            </>
+          ) : (
+            <>
+              <Header title="Antes de continuar, por favor selecciona un spot!" />
+              <Image
+                src={"/train-fence.svg"}
+                alt="train-fence"
+                width={200}
+                height={200}
+              />
+              <Button
+                className={styles.selectTimeButton}
+                onClick={() => handleScroll(selectSpotRef)}
+              >
+                Volver a seleccionar spot
+              </Button>
+            </>
+          )}
+        </section>
         {/* ---------------------- */}
       </main>
     </ReservationProvider.Provider>

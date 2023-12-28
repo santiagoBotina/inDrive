@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { RefObject, useState } from "react";
 
 export const useParkingLot = () => {
   const [selectedSpot, setSelectedSpot] = useState<number | null>(null);
@@ -12,8 +12,13 @@ export const useParkingLot = () => {
     setSelectedSpot(spotNumber);
   };
 
+  const handleScroll = (ref: RefObject<HTMLInputElement>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return {
     selectedSpot,
     handleSelectSpot,
+    handleScroll,
   };
 };
