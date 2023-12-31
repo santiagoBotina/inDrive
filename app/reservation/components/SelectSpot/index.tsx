@@ -3,26 +3,18 @@ import { Spot } from "@/core/domain/model/Spot";
 import { Button } from "@/shared/components/Button";
 import { Header } from "@/shared/components/Header";
 import { ParkingLot } from "@/shared/components/ParkingLot";
-import { MutableRefObject, memo } from "react";
-import { useParkingLot } from "../../hooks/useParkingLot";
-import styles from "./SelectSpot.module.css";
+import { memo } from "react";
 import { useReservationContext } from "../../providers/reservation.context";
+import styles from "./SelectSpot.module.css";
 
 interface Props {
-  selectSpotRef: MutableRefObject<null>;
   mockParkingLot: ParkingLotEntity;
   mockSpots: Spot[];
-  selectTimeRef: MutableRefObject<null>;
 }
 
-function Component({
-  selectSpotRef,
-  mockParkingLot,
-  mockSpots,
-  selectTimeRef,
-}: Props) {
-  const { handleScroll } = useParkingLot();
-  const { selectedSpot } = useReservationContext();
+function Component({ mockParkingLot, mockSpots }: Props) {
+  const { selectedSpot, handleScroll, selectSpotRef, selectTimeRef } =
+    useReservationContext();
 
   return (
     <section className={styles.spotSelection} ref={selectSpotRef}>
@@ -38,7 +30,7 @@ function Component({
       <Button
         className={styles.selectTimeButton}
         disabled={!selectedSpot}
-        onClick={() => handleScroll(selectTimeRef)}
+        onClick={() => handleScroll(selectTimeRef!)}
       >
         Seleccionar fecha de reserva
       </Button>

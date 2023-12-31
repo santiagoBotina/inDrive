@@ -4,8 +4,9 @@ import { Spot } from "@/core/domain/model/Spot";
 import { inParkingFont } from "@/theme/appFonts";
 import { useRef } from "react";
 import styles from "./Reservation.module.css";
-import { SelectReservationDate } from "./components/SelectReservationDate";
+import { SelectDate } from "./components/SelectDate";
 import { SelectSpot } from "./components/SelectSpot";
+import { SelectType } from "./components/SelectType";
 import { useParkingLot } from "./hooks/useParkingLot";
 import { ReservationProvider } from "./providers/reservation.provider";
 
@@ -72,26 +73,33 @@ const mockParkingLot: ParkingLotEntity = {
 export default function ReservationPage() {
   const selectSpotRef = useRef(null);
   const selectTimeRef = useRef(null);
-  const { selectedSpot, handleSelectSpot } = useParkingLot();
+  const selectTypeRef = useRef(null);
 
-  const providerValues = {
+  const {
+    handleScroll,
     selectedSpot,
     handleSelectSpot,
+    reservationType,
+    setReservationType,
+  } = useParkingLot();
+
+  const providerValues = {
+    handleScroll,
+    selectedSpot,
+    handleSelectSpot,
+    reservationType,
+    setReservationType,
+    selectTypeRef,
+    selectTimeRef,
+    selectSpotRef,
   };
 
   return (
     <ReservationProvider.Provider value={providerValues}>
       <main className={`${styles.main} ${inParkingFont.className}`}>
-        <SelectSpot
-          selectSpotRef={selectSpotRef}
-          mockParkingLot={mockParkingLot}
-          mockSpots={mockSpots}
-          selectTimeRef={selectTimeRef}
-        />
-        <SelectReservationDate
-          selectTimeRef={selectTimeRef}
-          selectSpotRef={selectSpotRef}
-        />
+        <SelectType />
+        <SelectSpot mockParkingLot={mockParkingLot} mockSpots={mockSpots} />
+        <SelectDate />
       </main>
     </ReservationProvider.Provider>
   );

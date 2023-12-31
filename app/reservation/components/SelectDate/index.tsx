@@ -1,19 +1,13 @@
-import { MutableRefObject, memo } from "react";
-import styles from './SelectReservationDate.module.css'
-import { useReservationContext } from "../../providers/reservation.context";
+import { Button } from "@/shared/components/Button";
 import { Header } from "@/shared/components/Header";
 import Image from "next/image";
-import { Button } from "@/shared/components/Button";
-import { useParkingLot } from "../../hooks/useParkingLot";
+import { MutableRefObject, memo } from "react";
+import { useReservationContext } from "../../providers/reservation.context";
+import styles from "./SelectReservationDate.module.css";
 
-interface Props {
-  selectTimeRef: MutableRefObject<null>;
-  selectSpotRef: MutableRefObject<null>;
-}
-
-function Component({ selectTimeRef, selectSpotRef }: Props) {
-  const { selectedSpot } = useReservationContext();
-  const { handleScroll } = useParkingLot();
+function Component() {
+  const { selectedSpot, handleScroll, selectTimeRef, selectSpotRef } =
+    useReservationContext();
 
   return (
     <section ref={selectTimeRef} className={`${styles.selectTime}`}>
@@ -39,7 +33,7 @@ function Component({ selectTimeRef, selectSpotRef }: Props) {
           />
           <Button
             className={styles.selectTimeButton}
-            onClick={() => handleScroll(selectSpotRef)}
+            onClick={() => handleScroll(selectSpotRef!)}
           >
             Volver a seleccionar spot
           </Button>
@@ -49,6 +43,6 @@ function Component({ selectTimeRef, selectSpotRef }: Props) {
   );
 }
 
-const SelectReservationDate = memo(Component)
+const SelectDate = memo(Component);
 
-export { SelectReservationDate }
+export { SelectDate };

@@ -1,11 +1,16 @@
 import { UUID } from "crypto";
 
 export enum ReservationType {
-  ONE_TIME = "ONE_TIME",
-  WEEKLY = "WEEKLY",
-  MONTHLY = "MONTHLY",
+  "ONE_TIME" = "Una vez",
+  "WEEKLY" = "Por semana",
+  "MONTHLY" = "Por mes",
 }
 
+export const RESERVATION_TYPE = {
+  "Una vez": "ONE_TIME",
+  "Por semana": "WEEKLY",
+  "Por mes": "MONTHLY",
+};
 
 export class Reservation {
   constructor(

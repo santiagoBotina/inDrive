@@ -23,7 +23,6 @@ function Component({
   isSpotSelected,
   setSelectedSpot,
 }: Props) {
-  console.log(`spot ${number}`, isSpotSelected);
   return (
     <Card
       onClick={() => setSelectedSpot(number)}
