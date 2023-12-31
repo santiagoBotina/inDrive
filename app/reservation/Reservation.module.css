@@ -4,27 +4,8 @@
   padding: 2rem;
 }
 
-.spotSelection, .selectTime {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  font-size: 1.1em;
-}
-
-.selectTimeButton {
-  margin-top: 3em;
-}
-
-.selectTime {
-}
-
 .main h1 {
   font-weight: 500;
-}
-
-.underlinedText {
-  text-decoration: underline;
 }
 
 .underlinedText span {
